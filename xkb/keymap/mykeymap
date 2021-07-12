@@ -2,6 +2,6 @@ xkb_keymap {
 	xkb_keycodes  { include "xfree86+aliases(qwerty)"	};
 	xkb_types     { include "complete"	};
 	xkb_compat    { include "complete+japan+xfree86(grab_break)"	};
-	xkb_symbols   { include "pc+jp+mysymbols(SuperHyper)+mysymbols(NFER2Hyper)"	};
-	xkb_geometry  { include "pc(pc104)"	};
+	xkb_symbols   { include "pc+jp(106)+mysymbols(SUPR_HYPR)+mysymbols(NFER_XFER)"	};
+	xkb_geometry  { include "pc(pc105)"	};
 };
