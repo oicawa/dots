@@ -1,20 +1,11 @@
 partial modifier_keys
-xkb_symbols "SUPR_HYPR" {
-
-    modifier_map Mod3 { Super_L, Super_R };
-
-    key <SUPR> {    [ NoSymbol, Super_L ]   };
-    modifier_map Mod3   { <SUPR> };
-
+xkb_symbols "HYPR" {
     key <HYPR> {    [ NoSymbol, Hyper_L ]   };
-    modifier_map Mod4   { <HYPR> };
+    modifier_map Mod3   { <HYPR> };
 };
 
 partial modifier_keys
 xkb_symbols "NFER_XFER" {
   key <NFER> { [ Hyper_L ] };
-  replace key <XFER> {
-    type[Group1] = "ONE_LEVEL",
-    symbols[Group1] = [ Return ]
-  };
+  key <XFER> { [ Return ] };
 };

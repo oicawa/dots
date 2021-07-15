@@ -1,2 +1,8 @@
 *~
-.emacs.desktop
+.emacs.d
+.emacs.desktop*
+.lsp-session-v1
+custom.el
+elpa
+eshell
+kkcrc
