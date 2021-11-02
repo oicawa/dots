@@ -27,7 +27,7 @@ function operate () {
 }
 
 function main () {
-	if [ "$1" -ne "" ]; then
+	if [ "$1" != "" ]; then
 		operate $1	
 		exit 0
 	fi
