@@ -1,2 +1,8 @@
 set number
 set tabstop=4
+set shiftwidth=4
+set belloff=all
+set clipboard+=unnamed
+
+filetype plugin on
+let g:netrw_liststyle=3
