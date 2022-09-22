@@ -4,6 +4,13 @@ set shiftwidth=4
 set belloff=all
 set clipboard+=unnamed
 
+" Cursor Line
+set cursorline
+highlight CursorLine cterm=underline ctermfg=NONE ctermbg=NONE gui=underline guifg=NONE guibg=NONE
+
+" Visual Background Color
+highlight Visual ctermfg=NONE ctermbg=238
+
 " netrw
 set nocp
 filetype plugin on
