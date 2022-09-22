@@ -8,7 +8,10 @@ function deploy () {
 	read REMOTE_HOST
 	echo -n "Input user account on the remote host>> "
 	read USER_ACCOUNT
-	scp -p ${DOTS_DIR} ${USER_ACCOUNT}@${REMOTE_HOST}:~ 
+	for ITEM in $( ls ${DOTS_DIR} ); do
+		echo ${ITEM}
+		scp -pr ${DOTS_DIR}/${ITEM} ${USER_ACCOUNT}@${REMOTE_HOST}:~/${DOTS_DIR} 
+	done
 }
 
 function setup () {
