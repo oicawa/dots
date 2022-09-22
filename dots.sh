@@ -14,11 +14,29 @@ function deploy () {
 	done
 }
 
+function vundle () {
+	VUNDLE_DIR=${DOTS_DIR}/../Vundle.vim
+	BUNDLE_DIR=${DOTS_DIR}/vim/bundle
+	VUNDLE_LNK=${BUNDLE_DIR}/Vundle.vim
+	if [ ! -d ${VUNDLE_DIR} ]; then
+		echo "Clone Vundle.vim from github.com."
+		git clone https://github.com/VundleVim/Vundle.vim.git ${VUNDLE_DIR}
+	fi
+	mkdir -p ${BUNDLE_DIR}
+	if [ ! -L ${VUNDLE_LNK} ]; then
+		echo "Create a symbolic link for Vundle.vim."
+		ln -s ${VUNDLE_DIR} ${VUNDLE_LNK}
+	fi
+}
+
 function setup () {
 	for item in $( ls ${DOTS_DIR} | grep -v "dots.*" | grep -v "LICENSE" ); do
-		echo ${item}
-		ln -s ${DOTS_DIR}/${item} ~/.${item}
+		if [ ! -L ~/.${item} ]; then
+			echo ${item}
+			ln -s ${DOTS_DIR}/${item} ~/.${item}
+		fi
 	done
+	vundle
 }
 
 function operate () {
