@@ -1,7 +1,8 @@
 set number
 set tabstop=4
 set shiftwidth=4
-set belloff=all
+:silent! set belloff=all
+set vb t_vb=
 set clipboard+=unnamed
 
 " Cursor Line

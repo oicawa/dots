@@ -6,6 +6,7 @@ DOTS_DIR_NAME=`basename ${DOTS_DIR_PATH}`
 function deploy () {
 	declare REMOTE_USER=$1
 	declare REMOTE_HOST=$2
+	declare REMOTE_DIR=$3
 
 	if [ -z ${REMOTE_USER} ]; then
 		echo -n "Input remote user on the remote host>> "
@@ -17,13 +18,20 @@ function deploy () {
 		read REMOTE_HOST
 	fi
 
-	mkdir ./.dummy
-	scp -pr ./.dummy ${REMOTE_USER}@${REMOTE_HOST}:~/${DOTS_DIR_NAME} 
-	rmdir ./.dummy
+	declare DEFAULT_REMOTE_DIR="~/.dots"
+	if [ -z ${REMOTE_DIR} ]; then
+		echo -n "Input remote destination dir [default:${DEFAULT_REMOTE_DIR}] >> "
+		read REMOTE_DIR
+		if [ -z ${REMOTE_DIR} ]; then
+			REMOTE_DIR=${DEFAULT_REMOTE_DIR}
+		fi
+	fi
+
+	#ssh -i ~/.ssh/id_rsa -p ./.dummy ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_DIR}
+	ssh ${REMOTE_USER}@${REMOTE_HOST} "mkdir -p ${REMOTE_DIR}"
 
 	for ITEM in $( ls ${DOTS_DIR_PATH} ); do
-		echo ${ITEM}
-		scp -pr ${DOTS_DIR_PATH}/${ITEM} ${REMOTE_USER}@${REMOTE_HOST}:~/${DOTS_DIR_NAME} 
+		scp -i ~/.ssh/id_rsa -pr ${DOTS_DIR_PATH}/${ITEM} ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_DIR} 
 	done
 }
 
