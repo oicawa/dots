@@ -12,6 +12,26 @@ highlight CursorLine cterm=underline ctermfg=NONE ctermbg=NONE gui=underline gui
 " Visual Background Color
 highlight Visual ctermfg=NONE ctermbg=238
 
+" Use meta keys in console.
+if has('unix') && !has('gui_running')
+  function! s:use_meta_keys()  " {{{
+    for i in map(
+    \   range(char2nr('a'), char2nr('z'))
+    \ + range(char2nr('A'), char2nr('Z'))
+    \ + range(char2nr('0'), char2nr('9'))
+    \ , 'nr2char(v:val)')
+      " <ESC>O do not map because used by arrow keys.
+      if i != 'O'
+        execute 'nmap <ESC>' . i '<M-' . i . '>'
+      endif
+    endfor
+  endfunction  " }}}
+
+  call s:use_meta_keys()
+  map <NUL> <C-Space>
+  map! <NUL> <C-Space>
+endif
+
 " netrw
 set nocp
 filetype plugin on
@@ -42,5 +62,5 @@ endfunction
 
 " shortcut
 " Ctrl + e -> toggle
-noremap <silent><C-e> :call ToggleNetrw()<CR>
+noremap <silent><M-f> :call ToggleNetrw()<CR>
 
