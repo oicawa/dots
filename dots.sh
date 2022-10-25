@@ -27,7 +27,6 @@ function deploy () {
 		fi
 	fi
 
-	#ssh -i ~/.ssh/id_rsa -p ./.dummy ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_DIR}
 	ssh ${REMOTE_USER}@${REMOTE_HOST} "mkdir -p ${REMOTE_DIR}"
 
 	for ITEM in $( ls ${DOTS_DIR_PATH} ); do
@@ -37,11 +36,17 @@ function deploy () {
 
 function setup () {
 	for ITEM in $( ls ${DOTS_DIR_PATH} | grep -v "dots.*" | grep -v "LICENSE" ); do
-		if [ ! -L ~/.${ITEM} ]; then
-			echo ${ITEM}
-			ln -s ${DOTS_DIR_PATH}/${ITEM} ~/.${ITEM}
+		echo ${ITEM}
+		if [ -L ~/.${ITEM} ]; then
+			unlink ~/.${ITEM}
 		fi
+		ln -s ${DOTS_DIR_PATH}/${ITEM} ~/.${ITEM}
 	done
+
+	grep ". ~/.bash_aliases" ~/.bashrc 2>&1 >> /dev/null
+	if [ $? -ne 0 ]; then
+		echo ". ~/.bash_aliases" >> ~/.bashrc
+	fi
 }
 
 function operate () {
