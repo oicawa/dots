@@ -47,6 +47,11 @@ function setup () {
 	if [ $? -ne 0 ]; then
 		echo ". ~/.bash_aliases" >> ~/.bashrc
 	fi
+
+	if [ ! -d ${DOTS_DIR_PATH}/tmux ];then
+		git clone https://github.com/tmux-plugins/tpm ${DOTS_DIR_PATH}/tmux/plugins/tpm
+		ln -s ${DOTS_DIR_PATH}/tmux ~/.tmux
+	fi
 }
 
 function operate () {
