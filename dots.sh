@@ -9,16 +9,16 @@ function deploy () {
 	declare REMOTE_DIR=$3
 
 	if [ -z ${REMOTE_USER} ]; then
-		echo -n "Input remote user on the remote host>> "
+		echo -n "Input remote user >> "
 		read REMOTE_USER
 	fi
 
 	if [ -z ${REMOTE_HOST} ]; then
-		echo -n "Input remote host name or remote host IP address >> "
+		echo -n "Input remote host name or IP >> "
 		read REMOTE_HOST
 	fi
 
-	declare DEFAULT_REMOTE_DIR="~/.dots"
+	declare DEFAULT_REMOTE_DIR="~/dots"
 	if [ -z ${REMOTE_DIR} ]; then
 		echo -n "Input remote destination dir [default:${DEFAULT_REMOTE_DIR}] >> "
 		read REMOTE_DIR
@@ -28,10 +28,7 @@ function deploy () {
 	fi
 
 	ssh ${REMOTE_USER}@${REMOTE_HOST} "mkdir -p ${REMOTE_DIR}"
-
-	for ITEM in $( ls ${DOTS_DIR_PATH} ); do
-		scp -i ~/.ssh/id_rsa -pr ${DOTS_DIR_PATH}/${ITEM} ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_DIR} 
-	done
+	scp -pr `ls ${DOTS_DIR_PATH} | grep -v -E "(\.git|LICENSE)"` ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_DIR} 
 }
 
 function setup () {
@@ -48,9 +45,8 @@ function setup () {
 		echo ". ~/.bash_aliases" >> ~/.bashrc
 	fi
 
-	if [ ! -d ${DOTS_DIR_PATH}/tmux ];then
-		git clone https://github.com/tmux-plugins/tpm ${DOTS_DIR_PATH}/tmux/plugins/tpm
-		ln -s ${DOTS_DIR_PATH}/tmux ~/.tmux
+	if [ ! -d ~/.tmux ];then
+		git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 	fi
 }
 

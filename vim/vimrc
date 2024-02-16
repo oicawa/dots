@@ -4,6 +4,10 @@ set shiftwidth=4
 :silent! set belloff=all
 set vb t_vb=
 set clipboard+=unnamed
+"
+" Auto comment off
+setlocal formatoptions-=r
+setlocal formatoptions-=o
 
 " Cursor Line
 set cursorline

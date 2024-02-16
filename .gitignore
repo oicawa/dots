@@ -1,10 +1,2 @@
-*~
-.emacs.d
-.emacs.desktop*
-.lsp-session-v1
-custom.el
-elpa
-eshell
-kkcrc
 .netrwhist
-tmux
+*.swp
