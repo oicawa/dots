@@ -3,11 +3,16 @@ set tabstop=4
 set shiftwidth=4
 :silent! set belloff=all
 set vb t_vb=
-set clipboard+=unnamed
-"
+" set clipboard+=unnamed
+
 " Auto comment off
-setlocal formatoptions-=r
-setlocal formatoptions-=o
+"setlocal formatoptions-=r
+"setlocal formatoptions-=o
+augroup auto_comment_off
+	autocmd!
+	autocmd BufEnter * setlocal formatoptions-=r
+	autocmd BufEnter * setlocal formatoptions-=o
+augroup END
 
 " Cursor Line
 set cursorline
@@ -67,4 +72,19 @@ endfunction
 " shortcut
 " Ctrl + e -> toggle
 noremap <silent><M-f> :call ToggleNetrw()<CR>
+
+" Tab display
+highlight SpecialKey ctermbg=NONE ctermfg=0 guibg=NONE guifg=NONE
+set list
+set listchars=tab:>-
+set expandtab
+
+" Clipboard Enable by using OSC52
+"vnoremap Y y:call SendViaOSC52(getreg('"'))<CR>
+augroup osc52
+    " As the first step, delete this autocmd definition of this group.
+    autocmd!
+    autocmd TextYankPost * if v:event.operator ==# 'y' | call SendViaOSC52(getreg(v:event.regname)) | endif
+augroup END
+
 

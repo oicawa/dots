@@ -3,10 +3,31 @@
 DOTS_DIR_PATH=$(cd $(dirname $0);pwd)
 DOTS_DIR_NAME=`basename ${DOTS_DIR_PATH}`
 
+function usage {
+    cat << EOS
+<usage.1>
+Copy files in 'dots' in local host directory to the remote host.
+
+    `basename $0` deploy <ssh_private_key_path> <remote_user> <remote_host> [<remote_dst_dir_path>]
+
+<usage.2>
+Setup the files in deployed dots
+
+    `basename $0` setup
+EOS
+
+}
+
 function deploy () {
-	declare REMOTE_USER=$1
-	declare REMOTE_HOST=$2
-	declare REMOTE_DIR=$3
+	local SSH_PRIVATE_KEY=$1
+	local REMOTE_USER=$2
+	local REMOTE_HOST=$3
+	local REMOTE_DIR=$4
+
+	if [ -z ${SSH_PRIVATE_KEY} ]; then
+		echo -n "Input ssh private key >> "
+		read SSH_PRIVATE_KEY
+	fi
 
 	if [ -z ${REMOTE_USER} ]; then
 		echo -n "Input remote user >> "
@@ -27,8 +48,8 @@ function deploy () {
 		fi
 	fi
 
-	ssh ${REMOTE_USER}@${REMOTE_HOST} "mkdir -p ${REMOTE_DIR}"
-	scp -pr `ls ${DOTS_DIR_PATH} | grep -v -E "(\.git|LICENSE)"` ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_DIR} 
+	ssh -i ${SSH_PRIVATE_KEY} ${REMOTE_USER}@${REMOTE_HOST} "mkdir -p ${REMOTE_DIR}"
+	scp -i ${SSH_PRIVATE_KEY} -pr `ls ${DOTS_DIR_PATH} | grep -v -E "(\.git|LICENSE)"` ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_DIR}
 }
 
 function setup () {

@@ -6,6 +6,6 @@ xkb_symbols "HYPR" {
 
 partial modifier_keys
 xkb_symbols "NFER_XFER" {
-  key <NFER> { [ Hyper_L ] };
-  key <XFER> { [ Return ] };
+    key <NFER> { [ Hyper_L ] };
+    key <XFER> { [ Return ] };
 };
