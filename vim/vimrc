@@ -41,38 +41,6 @@ if has('unix') && !has('gui_running')
   map! <NUL> <C-Space>
 endif
 
-" netrw
-set nocp
-filetype plugin on
-let g:netrw_preview=1
-let g:netrw_liststyle=3
-let g:netrw_keepdir=0
-let g:netrw_banner=0
-" window size
-let g:netrw_winsize=25
-let g:netrw_browse_split=4
-
-let g:NetrwIsOpen=0
-function! ToggleNetrw()
-	if g:NetrwIsOpen
-		let i = bufnr("$")
-		while (i >= 1)
-			if (getbufvar(i, "&filetype") == "netrw")
-				silent exe "bwipeout" . i
-			endif
-			let i-=1
-		endwhile
-		let g:NetrwIsOpen=0
-	else
-		let g:NetrwIsOpen=1
-		silent Vex
-	endif
-endfunction
-
-" shortcut
-" Ctrl + e -> toggle
-noremap <silent><M-f> :call ToggleNetrw()<CR>
-
 " Tab display
 highlight SpecialKey ctermbg=NONE ctermfg=0 guibg=NONE guifg=NONE
 set list
@@ -87,4 +55,5 @@ augroup osc52
     autocmd TextYankPost * if v:event.operator ==# 'y' | call SendViaOSC52(getreg(v:event.regname)) | endif
 augroup END
 
-
+" Word Separator Setting
+autocmd FileType * setlocal iskeyword=@,48-57,192-255
