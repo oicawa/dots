@@ -61,6 +61,15 @@ function setup () {
 		ln -s ${DOTS_DIR_PATH}/${ITEM} ~/.${ITEM}
 	done
 
+	mkdir -p ~/.local/bin
+	for ITEM in $( ls ${DOTS_DIR_PATH}/local/bin ); do
+		echo ${ITEM}
+		if [ -L ~/.local/bin/${ITEM} ]; then
+			unlink ~/.local/bin/${ITEM}
+		fi
+		ln -s ${DOTS_DIR_PATH}/local/bin/${ITEM} ~/.local/bin/${ITEM}
+	done
+
 	grep ". ~/.bash_aliases" ~/.bashrc 2>&1 >> /dev/null
 	if [ $? -ne 0 ]; then
 		echo ". ~/.bash_aliases" >> ~/.bashrc
