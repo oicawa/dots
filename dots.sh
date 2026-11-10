@@ -53,7 +53,8 @@ function deploy () {
 }
 
 function setup () {
-	for ITEM in $( ls ${DOTS_DIR_PATH} | grep -v "dots.*" | grep -v "LICENSE" ); do
+	#for ITEM in $( ls ${DOTS_DIR_PATH} | grep -v "dots.*" | grep -v "LICENSE" ); do
+	for ITEM in $( ls ${DOTS_DIR_PATH} | grep -v -E "(dots\.sh|LICENSE|local)" ); do
 		echo ${ITEM}
 		if [ -L ~/.${ITEM} ]; then
 			unlink ~/.${ITEM}
