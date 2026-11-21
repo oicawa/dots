@@ -49,6 +49,13 @@ set expandtab
 
 " Clipboard Enable by using OSC52
 "vnoremap Y y:call SendViaOSC52(getreg('"'))<CR>
+" Clipboard Enable by using OSC52
+function! SendViaOSC52(text)
+  let encoded = system('base64 | tr -d "\n"', a:text)
+  let seq = "\e]52;c;" . encoded . "\x07"
+  call writefile([seq], '/dev/tty', 'b')
+endfunction
+
 augroup osc52
     " As the first step, delete this autocmd definition of this group.
     autocmd!
